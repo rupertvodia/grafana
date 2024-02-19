@@ -136,9 +136,9 @@ func (p *Processor) Update(args component.Arguments) error {
 			TracerProvider: p.opts.Tracer,
 			MeterProvider:  metric.NewMeterProvider(metric.WithReader(promExporter)),
 
-			ReportComponentStatus: func(*otelcomponent.StatusEvent) error {
-				return nil
-			},
+			// ReportComponentStatus: func(*otelcomponent.StatusEvent) error {
+			// 	return nil
+			// },
 		},
 
 		BuildInfo: otelcomponent.BuildInfo{

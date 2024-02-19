@@ -27,7 +27,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	prom_config "github.com/prometheus/common/config"
 	"go.opentelemetry.io/collector/component/componenttest"
-	"go.opentelemetry.io/collector/confmap"
 	otelexporter "go.opentelemetry.io/collector/exporter"
 	"go.opentelemetry.io/collector/exporter/otlpexporter"
 	"go.opentelemetry.io/collector/exporter/otlphttpexporter"
@@ -995,19 +994,19 @@ func orderProcessors(processors []string, splitPipelines bool) [][]string {
 }
 
 func otelcolConfigFromStringMap(otelMapStructure map[string]interface{}, factories *otelcol.Factories) (*otelcol.Config, error) {
-	configMap := confmap.NewFromStringMap(otelMapStructure)
-	otelCfg, err := otelcol.Unmarshal(configMap, *factories)
-	if err != nil {
-		return nil, fmt.Errorf("failed to load OTel config: %w", err)
-	}
+	//configMap := confmap.NewFromStringMap(otelMapStructure)
+	// otelCfg, err := otelcol.Unmarshal(configMap, *factories)
+	// if err != nil {
+	// 	return nil, fmt.Errorf("failed to load OTel config: %w", err)
+	// }
 
 	res := otelcol.Config{
-		Receivers:  otelCfg.Receivers.Configs(),
-		Processors: otelCfg.Processors.Configs(),
-		Exporters:  otelCfg.Exporters.Configs(),
-		Connectors: otelCfg.Connectors.Configs(),
-		Extensions: otelCfg.Extensions.Configs(),
-		Service:    otelCfg.Service,
+		// Receivers:  otelCfg.Receivers.Configs(),
+		// Processors: otelCfg.Processors.Configs(),
+		// Exporters:  otelCfg.Exporters.Configs(),
+		// Connectors: otelCfg.Connectors.Configs(),
+		// Extensions: otelCfg.Extensions.Configs(),
+		// Service:    otelCfg.Service,
 	}
 
 	if err := res.Validate(); err != nil {

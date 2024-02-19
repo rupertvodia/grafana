@@ -131,9 +131,9 @@ func (otlpConfig OtlpConfig) Convert() otlpexporter.Config {
 		TimeoutSettings: exporterhelper.TimeoutSettings{
 			Timeout: otlpConfig.Timeout,
 		},
-		QueueSettings:      *otlpConfig.Queue.Convert(),
-		RetrySettings:      *otlpConfig.Retry.Convert(),
-		GRPCClientSettings: *otlpConfig.Client.Convert(),
+		// QueueSettings:      *otlpConfig.Queue.Convert(),
+		// RetrySettings:      *otlpConfig.Retry.Convert(),
+		// GRPCClientSettings: *otlpConfig.Client.Convert(),
 	}
 }
 

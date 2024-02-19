@@ -61,9 +61,9 @@ func (args Arguments) Convert() (otelcomponent.Config, error) {
 		TimeoutSettings: otelpexporterhelper.TimeoutSettings{
 			Timeout: args.Timeout,
 		},
-		QueueSettings:      *args.Queue.Convert(),
-		RetrySettings:      *args.Retry.Convert(),
-		GRPCClientSettings: *(*otelcol.GRPCClientArguments)(&args.Client).Convert(),
+		// QueueSettings:      *args.Queue.Convert(),
+		// RetrySettings:      *args.Retry.Convert(),
+		// GRPCClientSettings: *(*otelcol.GRPCClientArguments)(&args.Client).Convert(),
 	}, nil
 }
 

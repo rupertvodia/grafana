@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/grafana/river"
-	otelexporterhelper "go.opentelemetry.io/collector/exporter/exporterhelper"
 )
 
 // RetryArguments holds shared settings for components which can retry
@@ -53,17 +52,17 @@ func (args *RetryArguments) Validate() error {
 }
 
 // Convert converts args into the upstream type.
-func (args *RetryArguments) Convert() *otelexporterhelper.RetrySettings {
-	if args == nil {
-		return nil
-	}
+// func (args *RetryArguments) Convert() *otelexporterhelper.RetrySettings {
+// 	if args == nil {
+// 		return nil
+// 	}
 
-	return &otelexporterhelper.RetrySettings{
-		Enabled:             args.Enabled,
-		InitialInterval:     args.InitialInterval,
-		RandomizationFactor: args.RandomizationFactor,
-		Multiplier:          args.Multiplier,
-		MaxInterval:         args.MaxInterval,
-		MaxElapsedTime:      args.MaxElapsedTime,
-	}
-}
+// 	return &otelexporterhelper.RetrySettings{
+// 		Enabled:             args.Enabled,
+// 		InitialInterval:     args.InitialInterval,
+// 		RandomizationFactor: args.RandomizationFactor,
+// 		Multiplier:          args.Multiplier,
+// 		MaxInterval:         args.MaxInterval,
+// 		MaxElapsedTime:      args.MaxElapsedTime,
+// 	}
+// }

@@ -174,9 +174,9 @@ func (e *Exporter) Update(args component.Arguments) error {
 			TracerProvider: e.opts.Tracer,
 			MeterProvider:  metric.NewMeterProvider(metricOpts...),
 
-			ReportComponentStatus: func(*otelcomponent.StatusEvent) error {
-				return nil
-			},
+			// ReportComponentStatus: func(*otelcomponent.StatusEvent) error {
+			// 	return nil
+			// },
 		},
 
 		BuildInfo: otelcomponent.BuildInfo{

@@ -121,9 +121,9 @@ func (c *Component) Update(newConfig component.Arguments) error {
 			TracerProvider: traceNoop.NewTracerProvider(),
 			MeterProvider:  metricNoop.NewMeterProvider(),
 
-			ReportComponentStatus: func(*otelcomponent.StatusEvent) error {
-				return nil
-			},
+			// ReportComponentStatus: func(*otelcomponent.StatusEvent) error {
+			// 	return nil
+			// },
 		},
 
 		BuildInfo: otelcomponent.BuildInfo{

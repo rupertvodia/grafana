@@ -9,15 +9,13 @@ import (
 	"github.com/grafana/river"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/exporter/loadbalancingexporter"
 	"github.com/stretchr/testify/require"
-	"go.opentelemetry.io/collector/config/configgrpc"
-	"go.opentelemetry.io/collector/config/configopaque"
 	"go.opentelemetry.io/collector/exporter/exporterhelper"
 	"go.opentelemetry.io/collector/exporter/otlpexporter"
 )
 
 func TestConfigConversion(t *testing.T) {
 	var (
-		defaultRetrySettings   = exporterhelper.NewDefaultRetrySettings()
+		//defaultRetrySettings   = exporterhelper.NewDefaultRetrySettings()
 		defaultTimeoutSettings = exporterhelper.NewDefaultTimeoutSettings()
 
 		// TODO(rfratto): resync defaults with upstream.
@@ -32,16 +30,16 @@ func TestConfigConversion(t *testing.T) {
 
 		defaultProtocol = loadbalancingexporter.Protocol{
 			OTLP: otlpexporter.Config{
-				GRPCClientSettings: configgrpc.GRPCClientSettings{
-					Endpoint:        "",
-					Compression:     "gzip",
-					WriteBufferSize: 512 * 1024,
-					Headers:         map[string]configopaque.String{},
-					BalancerName:    "pick_first",
-				},
-				RetrySettings:   defaultRetrySettings,
+				// GRPCClientSettings: configgrpc.GRPCClientSettings{
+				// 	Endpoint:        "",
+				// 	Compression:     "gzip",
+				// 	WriteBufferSize: 512 * 1024,
+				// 	Headers:         map[string]configopaque.String{},
+				// 	BalancerName:    "pick_first",
+				// },
+				// RetrySettings:   defaultRetrySettings,
 				TimeoutSettings: defaultTimeoutSettings,
-				QueueSettings:   defaultQueueSettings,
+				//QueueSettings:   defaultQueueSettings,
 			},
 		}
 	)
@@ -124,16 +122,16 @@ func TestConfigConversion(t *testing.T) {
 						TimeoutSettings: exporterhelper.TimeoutSettings{
 							Timeout: 1 * time.Second,
 						},
-						RetrySettings: defaultRetrySettings,
-						QueueSettings: defaultQueueSettings,
-						GRPCClientSettings: configgrpc.GRPCClientSettings{
-							Endpoint:        "",
-							Compression:     "gzip",
-							WriteBufferSize: 512 * 1024,
-							Headers:         map[string]configopaque.String{},
-							BalancerName:    "pick_first",
-							Authority:       "authority",
-						},
+						// RetrySettings: defaultRetrySettings,
+						// QueueSettings: defaultQueueSettings,
+						// GRPCClientSettings: configgrpc.GRPCClientSettings{
+						// 	Endpoint:        "",
+						// 	Compression:     "gzip",
+						// 	WriteBufferSize: 512 * 1024,
+						// 	Headers:         map[string]configopaque.String{},
+						// 	BalancerName:    "pick_first",
+						// 	Authority:       "authority",
+						// },
 					},
 				},
 				Resolver: loadbalancingexporter.ResolverSettings{

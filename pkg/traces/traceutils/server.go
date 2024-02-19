@@ -11,19 +11,11 @@ import (
 	"github.com/grafana/agent/pkg/util"
 	"github.com/stretchr/testify/assert"
 	"go.opentelemetry.io/collector/component"
-	"go.opentelemetry.io/collector/confmap"
-	"go.opentelemetry.io/collector/connector"
 	"go.opentelemetry.io/collector/consumer"
 	"go.opentelemetry.io/collector/exporter"
-	otelexporter "go.opentelemetry.io/collector/exporter"
-	"go.opentelemetry.io/collector/extension"
-	"go.opentelemetry.io/collector/otelcol"
 	"go.opentelemetry.io/collector/pdata/ptrace"
 	"go.opentelemetry.io/collector/processor"
-	"go.opentelemetry.io/collector/receiver"
-	"go.opentelemetry.io/collector/receiver/otlpreceiver"
 	"go.opentelemetry.io/collector/service"
-	"go.opentelemetry.io/otel/trace/noop"
 	"gopkg.in/yaml.v3"
 )
 
@@ -98,73 +90,73 @@ func newServer(addr string, callback func(ptrace.Traces)) (*server, error) {
 		panic("could not decode config: " + err.Error())
 	}
 
-	extensionsFactory, err := extension.MakeFactoryMap()
-	if err != nil {
-		return nil, fmt.Errorf("failed to make extension factory map: %w", err)
-	}
+	// extensionsFactory, err := extension.MakeFactoryMap()
+	// if err != nil {
+	// 	return nil, fmt.Errorf("failed to make extension factory map: %w", err)
+	// }
 
-	receiversFactory, err := receiver.MakeFactoryMap(otlpreceiver.NewFactory())
-	if err != nil {
-		return nil, fmt.Errorf("failed to make receiver factory map: %w", err)
-	}
+	// receiversFactory, err := receiver.MakeFactoryMap(otlpreceiver.NewFactory())
+	// if err != nil {
+	// 	return nil, fmt.Errorf("failed to make receiver factory map: %w", err)
+	// }
 
-	exportersFactory, err := exporter.MakeFactoryMap(newNoopExporterFactory())
-	if err != nil {
-		return nil, fmt.Errorf("failed to make exporter factory map: %w", err)
-	}
+	// exportersFactory, err := exporter.MakeFactoryMap(newNoopExporterFactory())
+	// if err != nil {
+	// 	return nil, fmt.Errorf("failed to make exporter factory map: %w", err)
+	// }
 
-	processorsFactory, err := processor.MakeFactoryMap(
-		newFuncProcessorFactory(callback),
-	)
-	if err != nil {
-		return nil, fmt.Errorf("failed to make processor factory map: %w", err)
-	}
+	// processorsFactory, err := processor.MakeFactoryMap(
+	// 	newFuncProcessorFactory(callback),
+	// )
+	// if err != nil {
+	// 	return nil, fmt.Errorf("failed to make processor factory map: %w", err)
+	// }
 
-	factories := otelcol.Factories{
-		Extensions: extensionsFactory,
-		Receivers:  receiversFactory,
-		Processors: processorsFactory,
-		Exporters:  exportersFactory,
-	}
+	// factories := otelcol.Factories{
+	// 	Extensions: extensionsFactory,
+	// 	Receivers:  receiversFactory,
+	// 	Processors: processorsFactory,
+	// 	Exporters:  exportersFactory,
+	// }
 
-	configMap := confmap.NewFromStringMap(cfg)
-	otelCfgSettings, err := otelcol.Unmarshal(configMap, factories)
-	if err != nil {
-		return nil, fmt.Errorf("failed to make otel config: %w", err)
-	}
+	//configMap := confmap.NewFromStringMap(cfg)
+	// otelCfgSettings, err := otelcol.Unmarshal(configMap, factories)
+	// if err != nil {
+	// 	return nil, fmt.Errorf("failed to make otel config: %w", err)
+	// }
 
-	otelCfg := otelcol.Config{
-		Receivers:  otelCfgSettings.Receivers.Configs(),
-		Processors: otelCfgSettings.Processors.Configs(),
-		Exporters:  otelCfgSettings.Exporters.Configs(),
-		Connectors: otelCfgSettings.Connectors.Configs(),
-		Extensions: otelCfgSettings.Extensions.Configs(),
-		Service:    otelCfgSettings.Service,
-	}
+	// otelCfg := otelcol.Config{
+	// 	Receivers:  otelCfgSettings.Receivers.Configs(),
+	// 	Processors: otelCfgSettings.Processors.Configs(),
+	// 	Exporters:  otelCfgSettings.Exporters.Configs(),
+	// 	Connectors: otelCfgSettings.Connectors.Configs(),
+	// 	Extensions: otelCfgSettings.Extensions.Configs(),
+	// 	Service:    otelCfgSettings.Service,
+	// }
 
-	if err := otelCfg.Validate(); err != nil {
-		return nil, err
-	}
+	// if err := otelCfg.Validate(); err != nil {
+	// 	return nil, err
+	// }
 
-	svc, err := service.New(context.Background(), service.Settings{
-		Receivers:                receiver.NewBuilder(otelCfg.Receivers, factories.Receivers),
-		Processors:               processor.NewBuilder(otelCfg.Processors, factories.Processors),
-		Exporters:                otelexporter.NewBuilder(otelCfg.Exporters, factories.Exporters),
-		Connectors:               connector.NewBuilder(otelCfg.Connectors, factories.Connectors),
-		Extensions:               extension.NewBuilder(otelCfg.Extensions, factories.Extensions),
-		UseExternalMetricsServer: false,
-		TracerProvider:           noop.NewTracerProvider(),
-	}, otelCfg.Service)
-	if err != nil {
-		return nil, fmt.Errorf("failed to create Otel service: %w", err)
-	}
+	// svc, err := service.New(context.Background(), service.Settings{
+	// 	Receivers:  receiver.NewBuilder(otelCfg.Receivers, factories.Receivers),
+	// 	Processors: processor.NewBuilder(otelCfg.Processors, factories.Processors),
+	// 	Exporters:  otelexporter.NewBuilder(otelCfg.Exporters, factories.Exporters),
+	// 	Connectors: connector.NewBuilder(otelCfg.Connectors, factories.Connectors),
+	// 	Extensions: extension.NewBuilder(otelCfg.Extensions, factories.Extensions),
+	// 	// UseExternalMetricsServer: false,
+	// 	// TracerProvider:           noop.NewTracerProvider(),
+	// }, otelCfg.Service)
+	// if err != nil {
+	// 	return nil, fmt.Errorf("failed to create Otel service: %w", err)
+	// }
 
-	if err := svc.Start(context.Background()); err != nil {
-		return nil, fmt.Errorf("failed to start Otel service: %w", err)
-	}
+	// if err := svc.Start(context.Background()); err != nil {
+	// 	return nil, fmt.Errorf("failed to start Otel service: %w", err)
+	// }
 
 	return &server{
-		service: svc,
+		//service: svc,
 	}, nil
 }
 
