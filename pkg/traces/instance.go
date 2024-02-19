@@ -22,11 +22,8 @@ import (
 	"github.com/grafana/agent/pkg/metrics/instance"
 	"github.com/grafana/agent/pkg/traces/automaticloggingprocessor"
 	"github.com/grafana/agent/pkg/traces/contextkeys"
-	"github.com/grafana/agent/pkg/traces/servicegraphprocessor"
-	"github.com/grafana/agent/pkg/traces/traceutils"
 	"github.com/grafana/agent/pkg/util"
 	prom_client "github.com/prometheus/client_golang/prometheus"
-	"go.opentelemetry.io/otel/trace/noop"
 )
 
 // Instance wraps the OpenTelemetry collector to enable tracing pipelines
@@ -142,23 +139,23 @@ func (i *Instance) buildAndStartPipeline(ctx context.Context, cfg InstanceConfig
 		return err
 	}
 
-	promExporter, err := traceutils.PrometheusExporter(reg)
-	if err != nil {
-		return fmt.Errorf("error creating otel prometheus exporter: %w", err)
-	}
+	// promExporter, err := traceutils.PrometheusExporter(reg)
+	// if err != nil {
+	// 	return fmt.Errorf("error creating otel prometheus exporter: %w", err)
+	// }
 
 	i.service, err = service.New(ctx, service.Settings{
-		BuildInfo:                appinfo,
-		Receivers:                receiver.NewBuilder(otelConfig.Receivers, i.factories.Receivers),
-		Processors:               processor.NewBuilder(otelConfig.Processors, i.factories.Processors),
-		Exporters:                otelexporter.NewBuilder(otelConfig.Exporters, i.factories.Exporters),
-		Connectors:               connector.NewBuilder(otelConfig.Connectors, i.factories.Connectors),
-		Extensions:               extension.NewBuilder(otelConfig.Extensions, i.factories.Extensions),
-		OtelMetricViews:          servicegraphprocessor.OtelMetricViews(),
-		OtelMetricReader:         promExporter,
-		DisableProcessMetrics:    true,
-		UseExternalMetricsServer: true,
-		TracerProvider:           noop.NewTracerProvider(),
+		BuildInfo:  appinfo,
+		Receivers:  receiver.NewBuilder(otelConfig.Receivers, i.factories.Receivers),
+		Processors: processor.NewBuilder(otelConfig.Processors, i.factories.Processors),
+		Exporters:  otelexporter.NewBuilder(otelConfig.Exporters, i.factories.Exporters),
+		Connectors: connector.NewBuilder(otelConfig.Connectors, i.factories.Connectors),
+		Extensions: extension.NewBuilder(otelConfig.Extensions, i.factories.Extensions),
+		// OtelMetricViews:          servicegraphprocessor.OtelMetricViews(),
+		// OtelMetricReader:         promExporter,
+		// DisableProcessMetrics:    true,
+		// UseExternalMetricsServer: true,
+		// TracerProvider:           noop.NewTracerProvider(),
 		//TODO: Plug in an AsyncErrorChannel to shut down the Agent in case of a fatal event
 		LoggingOptions: []zap.Option{
 			zap.WrapCore(func(zapcore.Core) zapcore.Core {
