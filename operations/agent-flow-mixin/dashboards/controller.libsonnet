@@ -257,7 +257,7 @@ local filename = 'agent-flow-controller.json';
 
       // Component evaluation histogram
       (
-        panel.newHeatmap('Component evaluation histogram') +
+        panel.newHeatmap('Component evaluation histogram', 's') +
         panel.withDescription(|||
           Detailed histogram view of how long component evaluations take.
 
@@ -276,7 +276,7 @@ local filename = 'agent-flow-controller.json';
 
       // Component dependency wait time histogram
       (
-        panel.newHeatmap('Component dependency wait histogram') +
+        panel.newHeatmap('Component dependency wait histogram', 's') +
         panel.withDescription(|||
           Detailed histogram of how long components wait to be evaluated after their dependency is updated.
 

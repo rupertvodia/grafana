@@ -30,7 +30,7 @@
     },
   },
 
-  newHeatmap(title=''):: $.new(title, 'heatmap') {
+  newHeatmap(title='', unit=''):: $.new(title, 'heatmap') {
     maxDataPoints: 30,
     options: {
       calculate: false,
@@ -53,7 +53,7 @@
         yHistogram: true,
       },
       yAxis: {
-        unit: 's',
+        unit: unit,
       },
     },
     pluginVersion: '9.0.6',
